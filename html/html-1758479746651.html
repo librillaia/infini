@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo del Tiempo para Igualar Costes de Lámparas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .lamp-details {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .lamp-details h3 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        .calculation {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .conclusion {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-left: 5px solid #28a745;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        strong {
+            color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo del Tiempo para Igualar Costes de Lámparas</h1>
+        <p>Este documento presenta el cálculo de las duraciones individuales de funcionamiento (T1 para la Lámpara 1 y T2 para la Lámpara 2) necesarias para que sus costes totales de energía acumulados sean idénticos.</p>
+
+        <h2>Detalles de las Lámparas y Coste por Hora</h2>
+
+        <div class="lamp-details">
+            <h3>Lámpara 1</h3>
+            <ul>
+                <li><strong>Potencia (P1):</strong> 60W = 0.06 kW</li>
+                <li><strong>Coste por kWh:</strong> 2€</li>
+                <li><strong>Coste por hora (CostoH1):</strong> 0.06 kW * 2 €/kWh = <strong>0.12 €/hora</strong></li>
+            </ul>
+        </div>
+
+        <div class="lamp-details">
+            <h3>Lámpara 2</h3>
+            <ul>
+                <li><strong>Potencia (P2):</strong> 8W = 0.008 kW</li>
+                <li><strong>Coste por kWh:</strong> 6€</li>
+                <li><strong>Coste por hora (CostoH2):</strong> 0.008 kW * 6 €/kWh = <strong>0.048 €/hora</strong></li>
+            </ul>
+        </div>
+
+        <h2>Ecuación para el Coste Total Igual</h2>
+        <p>El coste total de cada lámpara (TC1 y TC2) se calcula multiplicando su coste por hora por el tiempo de funcionamiento (T1 y T2 respectivamente). Para que los costes sean iguales:</p>
+        <div class="calculation">
+            <code>TC1 = CostoH1 * T1</code><br>
+            <code>TC2 = CostoH2 * T2</code><br>
+            <code>0.12 * T1 = 0.048 * T2</code>
+        </div>
+
+        <h2>Relación entre los Tiempos de Funcionamiento</h2>
+        <p>A partir de la ecuación anterior, podemos establecer la relación necesaria entre T1 y T2 para que los costes totales sean idénticos:</p>
+
+        <h3>1. Calculando T1 en función de T2:</h3>
+        <div class="calculation">
+            <code>T1 = (0.048 / 0.12) * T2</code><br>
+            <strong><code>T1 = 0.4 * T2</code></strong>
+            <p>Esto significa que para que el coste sea el mismo, la Lámpara 1 debe funcionar el <strong>40%</strong> del tiempo que funcione la Lámpara 2.</p>
+        </div>
+
+        <h3>2. Calculando T2 en función de T1:</h3>
+        <div class="calculation">
+            <code>T2 = (0.12 / 0.048) * T1</code><br>
+            <strong><code>T2 = 2.5 * T1</code></strong>
+            <p>Esto significa que para que el coste sea el mismo, la Lámpara 2 debe funcionar <strong>2.5 veces</strong> el tiempo que funcione la Lámpara 1.</p>
+        </div>
+
+        <div class="conclusion">
+            <p><strong>Conclusión:</strong> No es posible determinar un valor único para T1 y T2 sin información adicional (por ejemplo, un coste total deseado o el tiempo de funcionamiento de una de las lámparas). Sin embargo, se ha establecido la relación precisa entre sus tiempos de funcionamiento para que sus costes totales sean idénticos.</p>
+            <ul>
+                <li>Si la Lámpara 2 funciona un tiempo T2, la Lámpara 1 debe funcionar <strong>0.4 * T2 horas</strong> para incurrir en el mismo coste.</li>
+                <li>Si la Lámpara 1 funciona un tiempo T1, la Lámpara 2 debe funcionar <strong>2.5 * T1 horas</strong> para incurrir en el mismo coste.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
