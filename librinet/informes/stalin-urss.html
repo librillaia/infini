@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Informe</title>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+                <style>
+                    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 2em; max-width: 800px; margin: 0 auto; }
+                    #content { border: 1px solid #ddd; padding: 1em 2em; border-radius: 8px; background-color: #fdfdfd;}
+                </style>
+            </head>
+            <body>
+                <h1>Informe</h1>
+                <div id="content"></div>
+                <script>
+                    const markdownContent = "Joseph Vissarionovich Stalin (born Ioseb Besarionis dze Jughashvili; December 18, 1878 – March 5, 1953) was a Soviet politician and revolutionary who led the Soviet Union from the mid-1920s until his death in 1953. He served as General Secretary of the Communist Party of the Soviet Union from 1922 to 1952 and as Premier from 1941 until his death.\n\nStalin rose to power after the death of Vladimir Lenin in 1924, gradually consolidating his control over the Communist Party and the state to become an absolute dictator by the 1930s. His ideology, known as Stalinism, was a variant of Marxism-Leninism characterized by a one-party totalitarian police state, rapid industrialization, the collectivization of agriculture, an intensification of class conflict, and a pervasive cult of personality around him.\n\nKey policies and events during Stalin's rule include:\n*   **Rapid Industrialization and Collectivization:** Stalin launched a series of Five-Year Plans aimed at transforming the Soviet Union from an agrarian society into a major industrial power. This involved forcibly collectivizing agriculture, which led to widespread resistance, brutal repression, and devastating famines, particularly in Ukraine, resulting in millions of deaths.\n*   **The Great Purge and Gulags:** To consolidate his power and eliminate perceived threats, Stalin instigated the Great Purge between 1934 and 1939, leading to mass arrests, show trials, executions, and the imprisonment of millions in forced labor camps known as gulags.\n*   **World War II:** Initially, Stalin's government signed the Molotov–Ribbentrop Pact with Nazi Germany in 1939, which enabled the Soviet invasion of Poland. However, Germany broke the pact by invading the Soviet Union in 1941. Stalin then joined the Allies, and as commander-in-chief, the Red Army played a decisive role in repelling the German invasion and capturing Berlin in 1945, ending the war in Europe.\n*   **Post-War Influence and the Cold War:** After World War II, Stalin established Soviet-aligned communist states in Eastern Europe, creating a buffer zone between Western Europe and the Soviet Union. These actions significantly increased tensions between the Soviet Union and Western powers, laying the groundwork for the Cold War.\n\nStalin's legacy is deeply contested. While he is credited with transforming the Soviet Union into an industrialized superpower and playing a crucial role in the Allied victory in World War II, his rule was marked by immense human suffering and millions of deaths due to his policies of repression, forced labor, and famine.";
+                    const converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true});
+                    document.getElementById('content').innerHTML = converter.makeHtml(markdownContent);
+                </script>
+            </body>
+            </html>
