@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Informe</title>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+                <style>
+                    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 2em; max-width: 800px; margin: 0 auto; }
+                    #content { border: 1px solid #ddd; padding: 1em 2em; border-radius: 8px; background-color: #fdfdfd;}
+                </style>
+            </head>
+            <body>
+                <h1>Informe</h1>
+                <div id="content"></div>
+                <script>
+                    const markdownContent = "El juego de la Serpiente (Snake Game) es un videojuego clásico de acción arcade donde el jugador controla una línea, o \"serpiente\", que crece al comer objetos o \"alimento\". El objetivo es evitar chocar contra los límites del área de juego o contra su propio cuerpo en constante crecimiento.\n\nSu concepto se originó en 1976 con \"Blockade\", pero ganó fama mundial con la versión de Nokia lanzada en 1997 para el Nokia 6110, y posteriormente con \"Snake II\" en el Nokia 3310. Las reglas básicas son mover la serpiente con las flechas, comer para crecer y evitar colisiones para no perder. Versiones modernas incluyen la de Google Search y juegos multijugador como Snake.io.";
+                    const converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true});
+                    document.getElementById('content').innerHTML = converter.makeHtml(markdownContent);
+                </script>
+            </body>
+            </html>
