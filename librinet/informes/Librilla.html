@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Informe</title>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+                <style>
+                    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; padding: 2em; max-width: 800px; margin: 0 auto; }
+                    #content { border: 1px solid #ddd; padding: 1em 2em; border-radius: 8px; background-color: #fdfdfd;}
+                </style>
+            </head>
+            <body>
+                <h1>Informe</h1>
+                <div id="content"></div>
+                <script>
+                    const markdownContent = "Librilla es un municipio español perteneciente a la Región de Murcia. Se localiza en el Valle del Guadalentín, a unos 29 kilómetros de la capital murciana, y está situado a ambos lados de la rambla del río Orón.\n\n**Datos Generales:**\n*   Tiene una población de 5,777 habitantes según el INE 2024.\n*   La extensión de su término municipal es de 56 km².\n*   Su altitud es de 119 metros sobre el nivel del mar.\n*   Limita al norte y al este con el municipio de Murcia, al norte con Mula y al sur y oeste con Alhama de Murcia.\n\n**Etimología e Historia:**\nEl nombre de Librilla proviene del geógrafo árabe Al-Idrisi, quien en el siglo XII la denominó \"Lymbraya\", que en árabe significa \"Barranco de los Espectros\", en alusión a la profunda rambla que cruza la población y que sirvió como defensa natural. La historia de Librilla se remonta a tiempos de los íberos, con restos arqueológicos de un asentamiento en El Castellar. Tras la dominación musulmana, en 1243, Librilla fue entregada como protectorado al futuro Alfonso X de Castilla. La Casa de Fajardo estableció su mayorazgo en Librilla, construyendo su casa solariega que fue habitada hasta el siglo XVIII.\n\n**Economía:**\nLa principal actividad económica de Librilla es la agricultura de regadío, destacando la producción de limones. Recientemente, ha desarrollado una producción industrial con el polígono industrial Cabecicos Blancos.\n\n**Lugares de Interés y Patrimonio:**\nEntre los lugares más notables de Librilla se encuentran:\n*   La Iglesia de San Bartolomé, concluida en el siglo XVII, que conserva tallas del escultor Sánchez Lozano.\n*   Restos del Castillo de Librilla, declarados Bien de Interés Cultural.\n*   El Lavador, con un impresionante olmo centenario.\n*   La Casa del Marqués de Camachos, una construcción del siglo XVII.\n*   La Casa Méndez o Mansión de Rosalía, un edificio representativo con leyendas locales sobre fantasmas.\n*   El Parque del Sagrado Corazón, conocido como \"El Monumento\".\n*   Los Barrancos de Gebas, un espacio natural cercano de gran interés.\n\n**Festividades:**\nLas fiestas patronales de Librilla se celebran del 20 al 24 de agosto en honor a San Bartolomé Apóstol. Un momento tradicional de estas fiestas es el \"reparto de pitanzas\", donde se lanzan panecillos desde los balcones del ayuntamiento. Otras festividades incluyen la Epifanía (6 de enero) con la representación del Auto de los Reyes Magos, la Semana Santa, la festividad de la Santa Cruz (2 y 3 de mayo), la fiesta de la Virgen del Carmen (16 de julio) y la de Nuestra Señora de los Ángeles (2 de agosto).";
+                    const converter = new showdown.Converter({tables: true, strikethrough: true, tasklists: true, simpleLineBreaks: true});
+                    document.getElementById('content').innerHTML = converter.makeHtml(markdownContent);
+                </script>
+            </body>
+            </html>
