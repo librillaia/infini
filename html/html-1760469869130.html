@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Vocabulario - Inglés 0, Unidad 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.5;
+            margin: 0;
+            padding: 15px;
+            font-size: 0.9em;
+        }
+        .container {
+            max-width: 750px;
+            margin: 15px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        .exercise-block {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1em;
+            color: #555;
+            margin: 0;
+        }
+        #answer-key {
+            margin-top: 30px;
+            padding: 18px;
+            border: 1px solid #0056b3;
+            border-radius: 8px;
+            background-color: #e6f2ff;
+        }
+        #answer-key h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        #answer-key ul {
+            list-style-type: none;
+            padding: 0;
+            column-count: 2;
+            column-gap: 25px;
+        }
+        #answer-key ul li {
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+        #answer-key ul li strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="vocabulary-exercises">
+            <!-- Exercises will be generated here by JavaScript -->
+        </div>
+
+        <div id="answer-key">
+            <h2>Clave de Respuestas</h2>
+            <ul id="answers-list">
+                <!-- Answers will be generated here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const vocabulary = [
+            { english: "beat the odds", spanish: "superar las dificultades" },
+            { english: "binge-watch", spanish: "atracón de series/películas" },
+            { english: "content", spanish: "contenido" },
+            { english: "e-book", spanish: "libro electrónico" },
+            { english: "franchise", spanish: "franquicia" },
+            { english: "genre", spanish: "género" },
+            { english: "graphic novel", spanish: "novela gráfica" },
+            { english: "hardback", spanish: "libro de tapa dura" },
+            { english: "paperback", spanish: "libro de bolsillo, de tapa blanda" },
+            { english: "plot", spanish: "argumento" },
+            { english: "print edition", spanish: "edición impresa" },
+            { english: "romance", spanish: "novela romántica" },
+            { english: "storyline", spanish: "trama" },
+            { english: "thriller", spanish: "suspense" },
+            { english: "uplifting", spanish: "edificante" },
+
+            { english: "amazed", spanish: "asombrado" },
+            { english: "amazing", spanish: "asombroso" },
+            { english: "amused", spanish: "divertido" },
+            { english: "amusing", spanish: "divertido" },
+            { english: "concerned", spanish: "preocupado" },
+            { english: "concerning", spanish: "preocupante" },
+            { english: "exhausted", spanish: "exhausto" },
+            { english: "exhausting", spanish: "agotador" },
+            { english: "inspired", spanish: "inspirado" },
+            { english: "inspiring", spanish: "inspirador" },
+            { english: "intrigued", spanish: "intrigado" },
+            { english: "intriguing", spanish: "intrigante" },
+            { english: "overwhelmed", spanish: "abrumado" },
+            { english: "overwhelming", spanish: "abrumador" },
+            { english: "shocked", spanish: "sorprendido" },
+            { english: "shocking", spanish: "sorprendente" },
+
+            { english: "anxious", spanish: "angustiado" },
+            { english: "ashamed", spanish: "avergonzado" },
+            { english: "astonished", spanish: "asombrado" },
+            { english: "confused", spanish: "confuso" },
+            { english: "delighted", spanish: "encantado" },
+            { english: "disappointed", spanish: "decepcionado" },
+            { english: "enthusiastic", spanish: "entusiasta" },
+            { english: "grateful", spanish: "agradecido" },
+            { english: "jealous", spanish: "envidioso, celoso" },
+            { english: "proud", spanish: "orgulloso" },
+            { english: "relieved", spanish: "aliviado" },
+            { english: "scared", spanish: "asustado" },
+            { english: "stressed", spanish: "estresado" },
+            { english: "terrified", spanish: "aterrorizado" },
+            { english: "thrilled", spanish: "entusiasmado" },
+            { english: "upset", spanish: "disgustado" },
+
+            { english: "deafening", spanish: "ensordecedor" },
+            { english: "jagged", spanish: "irregular" },
+            { english: "roaring", spanish: "estruendoso" },
+            { english: "rotten", spanish: "podrido" },
+            { english: "slimy", spanish: "viscoso" },
+            { english: "smelly", spanish: "que huele mal" },
+            { english: "smooth", spanish: "suave" },
+            { english: "sparkling", spanish: "brillante" },
+            { english: "stiff", spanish: "rígido" },
+            { english: "stinky", spanish: "apestoso" },
+            { english: "tight", spanish: "apretado" },
+
+            { english: "awful", spanish: "horroroso" },
+            { english: "carelessness", spanish: "descuido" },
+            { english: "poverty", spanish: "pobreza" },
+            { english: "relatable", spanish: "con el/la que uno puede identificarse" },
+            { english: "urgently", spanish: "urgentemente" }
+        ];
+
+        function generateExercisesAndAnswers() {
+            const exercisesContainer = document.getElementById('vocabulary-exercises');
+            const answersList = document.getElementById('answers-list');
+            
+            exercisesContainer.innerHTML = '';
+            answersList.innerHTML = '';
+
+            vocabulary.forEach((word, index) => {
+                // Generate exercise block (Spanish word only)
+                const exerciseBlock = document.createElement('div');
+                exerciseBlock.className = 'exercise-block';
+
+                const questionText = document.createElement('p');
+                questionText.className = 'question-text';
+                questionText.textContent = `${index + 1}. ${word.spanish}`;
+                
+                exerciseBlock.appendChild(questionText);
+                exercisesContainer.appendChild(exerciseBlock);
+
+                // Generate answer list item
+                const answerItem = document.createElement('li');
+                answerItem.innerHTML = `<strong>${index + 1}. ${word.spanish}:</strong> ${word.english}`;
+                answersList.appendChild(answerItem);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', generateExercisesAndAnswers);
+    </script>
+</body>
+</html>
