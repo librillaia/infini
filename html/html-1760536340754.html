@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla Sencilla</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ejemplo de Tabla HTML</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Juan</td>
+                <td>Pérez</td>
+                <td>30</td>
+                <td>Madrid</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>María</td>
+                <td>Gómez</td>
+                <td>24</td>
+                <td>Barcelona</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Carlos</td>
+                <td>Rodríguez</td>
+                <td>35</td>
+                <td>Sevilla</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Ana</td>
+                <td>Martínez</td>
+                <td>28</td>
+                <td>Valencia</td>
+            </tr>
+            <tr>
+                <td>105</td>
+                <td>Pedro</td>
+                <td>Sánchez</td>
+                <td>42</td>
+                <td>Bilbao</td>
+            </tr>
+            <tr>
+                <td>106</td>
+                <td>Laura</td>
+                <td>Fernández</td>
+                <td>29</td>
+                <td>Málaga</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
