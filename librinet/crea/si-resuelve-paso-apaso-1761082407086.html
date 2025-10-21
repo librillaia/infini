@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resolución Paso a Paso</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 20px;
+            margin: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .step {
+            margin-bottom: 15px;
+            border-left: 3px solid #007bff;
+            padding-left: 10px;
+            background-color: #e9f5ff;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .math-expression {
+            font-size: 1.3em;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .fraction-container {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .numerator, .denominator {
+            padding: 2px 5px;
+            white-space: nowrap;
+        }
+        .fraction-line {
+            border-bottom: 1px solid black;
+            margin: 0 -5px;
+        }
+        sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+        sub {
+            font-size: 0.7em;
+            vertical-align: sub;
+        }
+        b {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Resolución Paso a Paso de la Expresión</h2>
+
+    <p>La expresión a resolver es:</p>
+    <div class="math-expression">
+        <span class="fraction-container">
+            <div class="numerator">
+                x<sup>-2</sup> &sdot; 3y<sup>-3</sup>
+            </div>
+            <div class="fraction-line"></div>
+            <div class="denominator">
+                6xy<sup>-2</sup>
+            </div>
+        </span>
+    </div>
+
+    <div class="step">
+        <b>Paso 1: Reescribir los términos con exponentes negativos como fracciones.</b><br>
+        Recuerda la propiedad: a<sup>-n</sup> = 1/a<sup>n</sup><br>
+        x<sup>-2</sup> = 1/x<sup>2</sup><br>
+        y<sup>-3</sup> = 1/y<sup>3</sup><br>
+        y<sup>-2</sup> = 1/y<sup>2</sup><br>
+        Sustituyendo en la expresión original:<br>
+        <div class="math-expression">
+            <span class="fraction-container">
+                <div class="numerator">
+                    (1/x<sup>2</sup>) &sdot; (3/y<sup>3</sup>)
+                </div>
+                <div class="fraction-line"></div>
+                <div class="denominator">
+                    6x &sdot; (1/y<sup>2</sup>)
+                </div>
+            </span>
+        </div>
+    </div>
+
+    <div class="step">
+        <b>Paso 2: Simplificar el numerador y el denominador.</b><br>
+        Numerador:<br>
+        (1/x<sup>2</sup>) &sdot; (3/y<sup>3</sup>) = 3 / (x<sup>2</sup>y<sup>3</sup>)<br>
+        Denominador:<br>
+        6x &sdot; (1/y<sup>2</sup>) = 6x / y<sup>2</sup><br>
+        La expresión se convierte en:<br>
+        <div class="math-expression">
+            <span class="fraction-container">
+                <div class="numerator">
+                    3 / (x<sup>2</sup>y<sup>3</sup>)
+                </div>
+                <div class="fraction-line"></div>
+                <div class="denominator">
+                    6x / y<sup>2</sup>
+                </div>
+            </span>
+        </div>
+    </div>
+
+    <div class="step">
+        <b>Paso 3: Convertir la división de fracciones en una multiplicación por el recíproco.</b><br>
+        (a/b) / (c/d) = (a/b) &sdot; (d/c)<br>
+        En nuestro caso:<br>
+        (3 / (x<sup>2</sup>y<sup>3</sup>)) &sdot; (y<sup>2</sup> / (6x))
+    </div>
+
+    <div class="step">
+        <b>Paso 4: Multiplicar las fracciones.</b><br>
+        Multiplicar numeradores y denominadores:<br>
+        (3 &sdot; y<sup>2</sup>) / (x<sup>2</sup>y<sup>3</sup> &sdot; 6x)
+    </div>
+
+    <div class="step">
+        <b>Paso 5: Agrupar términos similares y simplificar.</b><br>
+        Reorganizar los términos:<br>
+        (3 &sdot; y<sup>2</sup>) / (6 &sdot; x<sup>2</sup> &sdot; x &sdot; y<sup>3</sup>)<br>
+        Combinar potencias de la misma base (x<sup>a</sup> &sdot; x<sup>b</sup> = x<sup>a+b</sup>):<br>
+        x<sup>2</sup> &sdot; x = x<sup>2+1</sup> = x<sup>3</sup><br>
+        La expresión es ahora:<br>
+        (3 &sdot; y<sup>2</sup>) / (6 &sdot; x<sup>3</sup> &sdot; y<sup>3</sup>)
+    </div>
+
+    <div class="step">
+        <b>Paso 6: Simplificar los coeficientes y las potencias de las variables.</b><br>
+        Simplificar los coeficientes: 3/6 = 1/2<br>
+        Simplificar las potencias de 'y' (y<sup>a</sup> / y<sup>b</sup> = y<sup>a-b</sup>):<br>
+        y<sup>2</sup> / y<sup>3</sup> = y<sup>2-3</sup> = y<sup>-1</sup> = 1/y<br>
+        Sustituyendo todo de nuevo:<br>
+        (1/2) &sdot; (1/x<sup>3</sup>) &sdot; (1/y)
+    </div>
+
+    <div class="step">
+        <b>Paso 7: Escribir la solución final.</b><br>
+        Multiplicando todos los términos:<br>
+        1 / (2x<sup>3</sup>y)
+    </div>
+
+    <h3>Solución Final:</h3>
+    <div class="math-expression" style="font-size: 1.5em; border: 1px solid #007bff; padding: 10px; background-color: #d6eaff;">
+        <span class="fraction-container">
+            <div class="numerator">
+                1
+            </div>
+            <div class="fraction-line"></div>
+            <div class="denominator">
+                2x<sup>3</sup>y
+            </div>
+        </span>
+    </div>
+
+</body>
+</html>
