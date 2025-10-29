@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proceso de Producción de Harina de Trigo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to the top of the container */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+
+        .flowchart-container {
+            width: 850px; /* Adjusted width to accommodate notes */
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center main flow items horizontally */
+            position: relative; /* For absolute positioning of notes */
+        }
+
+        .flowchart-title {
+            background-color: #DDDDDD; /* Grey background as in image */
+            border: 1px solid #000080; /* Dark blue border */
+            padding: 10px 20px;
+            margin-bottom: 30px; /* Space after title */
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            width: fit-content;
+            box-sizing: border-box;
+        }
+
+        .flow-step {
+            background-color: #FFFFCC; /* Yellow background */
+            border: 1px solid #000080; /* Dark blue border */
+            padding: 10px;
+            margin: 10px 0; /* Vertical margin for spacing steps */
+            text-align: center;
+            width: 280px; /* Fixed width for steps */
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* Crucial for positioning notes */
+            box-sizing: border-box;
+            z-index: 1; /* Ensure steps are above arrow lines if overlaps */
+        }
+
+        .flow-arrow {
+            width: 1px;
+            height: 30px; /* Length of the arrow line */
+            background-color: #000080; /* Dark blue for the line */
+            position: relative;
+            margin: 0 auto; /* Center the arrow */
+            z-index: 0;
+        }
+        .flow-arrow::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 8px solid #000080; /* Arrowhead color */
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+
+        .flow-note {
+            background-color: #FFFFCC; /* Yellow background */
+            border: 1px solid #000080; /* Dark blue border */
+            padding: 10px;
+            width: 250px; /* Fixed width for notes */
+            font-size: 0.85em;
+            text-align: left;
+            position: absolute;
+            top: 50%; /* Center vertically relative to parent step */
+            transform: translateY(-50%);
+            box-sizing: border-box;
+            z-index: 2; /* Notes should be on top of other elements */
+        }
+
+        .note-left {
+            right: calc(100% + 40px); /* Position to the left of the step with some gap */
+        }
+        .note-left::after { /* Horizontal line part from note to step */
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -25px; /* Length of horizontal line */
+            width: 25px;
+            height: 1px;
+            background-color: #000080;
+            transform: translateY(-50%);
+        }
+        .note-left::before { /* Arrowhead at the end of the line, pointing right */
+            content: '';
+            position: absolute;
+            top: calc(50% - 5px); /* Adjust to center vertically with the line */
+            right: -30px; /* Position the arrowhead at the end of the line */
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid #000080; /* Arrowhead pointing right */
+        }
+
+
+        .note-right {
+            left: calc(100% + 40px); /* Position to the right of the step with some gap */
+        }
+        .note-right::after { /* Horizontal line part from note to step */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -25px; /* Length of horizontal line */
+            width: 25px;
+            height: 1px;
+            background-color: #000080;
+            transform: translateY(-50%);
+        }
+        .note-right::before { /* Arrowhead at the end of the line, pointing left */
+            content: '';
+            position: absolute;
+            top: calc(50% - 5px); /* Adjust to center vertically with the line */
+            left: -30px; /* Position the arrowhead at the end of the line */
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 5px solid #000080; /* Arrowhead pointing left */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="flowchart-container">
+        <div class="flowchart-title">PROCESO DE PRODUCCIÓN DE HARINA DE TRIGO</div>
+
+        <div class="flow-step">Recepción e Inspección de materia prima</div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">
+            Separación magnética
+            <div class="flow-note note-left">En estas etapas se separan las impurezas, materias vegetales, animales, minerales, clavos, cuerdas y otros objetos extraños</div>
+        </div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">Limpieza</div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">
+            Acondicionamiento
+            <div class="flow-note note-right">El acondicionamiento se realiza para mejorar el estado físico del grano ajustando y uniformando su contenidos de humedad. Se debe evitar la desnaturalización del gluten con excesos de temperatura</div>
+        </div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">
+            Molienda y cribado
+            <div class="flow-note note-left">Las claves para obtener un buen producto final son la óptima separación del germen y el salvado del endosperma y la posterior reducción gradual de este último</div>
+        </div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">Tamizado</div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">Incorporación de aditivos</div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">Embolsado</div>
+
+        <div class="flow-arrow"></div>
+
+        <div class="flow-step">
+            Harina de trigo
+            <div class="flow-note note-right">Durante el transporte y almacenamiento, el producto debe resguardarse de la humedad y del ataque de microorganismos, insectos y/o roedores</div>
+        </div>
+    </div>
+</body>
+</html>
