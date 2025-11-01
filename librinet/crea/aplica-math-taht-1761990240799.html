@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solución Paso a Paso de Operaciones Algebraicas</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .problem { margin-bottom: 25px; border: 1px solid #eee; padding: 10px; border-radius: 5px; }
+        .label { font-weight: bold; margin-bottom: 5px; display: block; }
+        .step { margin-left: 20px; margin-bottom: 8px; }
+        .expression { font-family: 'Times New Roman', serif; font-size: 1.1em; }
+        .final-result { font-weight: bold; color: #0056b3; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>37. Opera y simplifica cuando sea posible (Paso a Paso):</h1>
+
+    <div class="problem">
+        <span class="label">(a)</span> <span class="expression">$\frac{5x - 10}{x + 3} \cdot \frac{x^2 - 9}{x - 2}$</span>
+        <div class="step">1. Factorizar los términos:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$5x - 10 = 5(x - 2)$</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$x^2 - 9 = (x - 3)(x + 3)$</div>
+        <div class="step">2. Sustituir los términos factorizados en la expresión:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{5(x - 2)}{x + 3} \cdot \frac{(x - 3)(x + 3)}{x - 2}$</div>
+        <div class="step">3. Multiplicar las fracciones:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{5(x - 2)(x - 3)(x + 3)}{(x + 3)(x - 2)}$</div>
+        <div class="step">4. Simplificar cancelando términos comunes $(x - 2)$ y $(x + 3)$:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$5(x - 3)$</div>
+        <div class="step final-result">Resultado final: $5x - 15$</div>
+    </div>
+
+    <div class="problem">
+        <span class="label">(b)</span> <span class="expression">$\frac{2x + 1}{2x - 1} \div \frac{x^2}{4x - 2}$</span>
+        <div class="step">1. Reemplazar la división por la multiplicación por el recíproco de la segunda fracción:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{2x + 1}{2x - 1} \cdot \frac{4x - 2}{x^2}$</div>
+        <div class="step">2. Factorizar los términos:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$4x - 2 = 2(2x - 1)$</div>
+        <div class="step">3. Sustituir el término factorizado:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{2x + 1}{2x - 1} \cdot \frac{2(2x - 1)}{x^2}$</div>
+        <div class="step">4. Multiplicar las fracciones:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{(2x + 1) \cdot 2(2x - 1)}{(2x - 1) \cdot x^2}$</div>
+        <div class="step">5. Simplificar cancelando el término común $(2x - 1)$:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{2(2x + 1)}{x^2}$</div>
+        <div class="step">6. Expandir el numerador:</div>
+        <div class="step final-result">Resultado final: $\frac{4x + 2}{x^2}$</div>
+    </div>
+
+    <div class="problem">
+        <span class="label">(c)</span> <span class="expression">$\frac{x}{3} \cdot \frac{2x + 1}{x - 1}$</span>
+        <div class="step">1. Multiplicar los numeradores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$x \cdot (2x + 1) = 2x^2 + x$</div>
+        <div class="step">2. Multiplicar los denominadores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$3 \cdot (x - 1) = 3x - 3$</div>
+        <div class="step">3. Combinar los resultados en una sola fracción:</div>
+        <div class="step final-result">Resultado final: $\frac{2x^2 + x}{3x - 3}$</div>
+    </div>
+
+    <div class="problem">
+        <span class="label">(d)</span> <span class="expression">$\frac{1}{x - 1} \div \frac{x + 1}{3x}$</span>
+        <div class="step">1. Reemplazar la división por la multiplicación por el recíproco de la segunda fracción:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{1}{x - 1} \cdot \frac{3x}{x + 1}$</div>
+        <div class="step">2. Multiplicar los numeradores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$1 \cdot 3x = 3x$</div>
+        <div class="step">3. Multiplicar los denominadores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$(x - 1) \cdot (x + 1) = x^2 - 1$ (diferencia de cuadrados)</div>
+        <div class="step">4. Combinar los resultados en una sola fracción:</div>
+        <div class="step final-result">Resultado final: $\frac{3x}{x^2 - 1}$</div>
+    </div>
+
+    <div class="problem">
+        <span class="label">(e)</span> <span class="expression">$\frac{2}{x - 1} \div \frac{x}{x + 1}$</span>
+        <div class="step">1. Reemplazar la división por la multiplicación por el recíproco de la segunda fracción:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{2}{x - 1} \cdot \frac{x + 1}{x}$</div>
+        <div class="step">2. Multiplicar los numeradores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$2 \cdot (x + 1) = 2x + 2$</div>
+        <div class="step">3. Multiplicar los denominadores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$(x - 1) \cdot x = x^2 - x$</div>
+        <div class="step">4. Combinar los resultados en una sola fracción:</div>
+        <div class="step final-result">Resultado final: $\frac{2x + 2}{x^2 - x}$</div>
+    </div>
+
+    <div class="problem">
+        <span class="label">(f)</span> <span class="expression">$\frac{2x}{2x - 3} \div \frac{x + 1}{2x + 3}$</span>
+        <div class="step">1. Reemplazar la división por la multiplicación por el recíproco de la segunda fracción:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$\frac{2x}{2x - 3} \cdot \frac{2x + 3}{x + 1}$</div>
+        <div class="step">2. Multiplicar los numeradores:</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$2x \cdot (2x + 3) = 4x^2 + 6x$</div>
+        <div class="step">3. Multiplicar los denominadores (expandir):</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$(2x - 3) \cdot (x + 1) = 2x(x) + 2x(1) - 3(x) - 3(1)$</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$ = 2x^2 + 2x - 3x - 3$</div>
+        <div class="step">&nbsp;&nbsp;&nbsp;&nbsp;$ = 2x^2 - x - 3$</div>
+        <div class="step">4. Combinar los resultados en una sola fracción:</div>
+        <div class="step final-result">Resultado final: $\frac{4x^2 + 6x}{2x^2 - x - 3}$</div>
+    </div>
+</body>
+</html>
