@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ordenar Elementos por Afinidad Electrónica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #sortable-list {
+            list-style: none;
+            padding: 0;
+            border: 1px solid #ddd;
+            min-height: 250px; /* Para que sea un área de arrastre visible */
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+        }
+        .element-item {
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+            padding: 12px 15px;
+            cursor: grab;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            user-select: none;
+        }
+        .element-item:hover {
+            background-color: #c9e9ed;
+        }
+        .dragging {
+            opacity: 0.5;
+            border: 2px dashed #007bff;
+            background-color: #e0e0e0;
+        }
+        button {
+            display: block;
+            width: 80%;
+            padding: 12px 20px;
+            margin: 25px auto 10px auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ordenar Elementos por Afinidad Electrónica</h1>
+        <p>Arrastra y suelta los elementos para ordenarlos de <strong>menor a mayor afinidad electrónica</strong> (es decir, de la afinidad menos negativa/más positiva a la más negativa).</p>
+        <ul id="sortable-list">
+            <!-- Los elementos se barajan inicialmente -->
+            <li class="element-item" draggable="true" data-symbol="Cl">Cl (Cloro)</li>
+            <li class="element-item" draggable="true" data-symbol="N">N (Nitrógeno)</li>
+            <li class="element-item" draggable="true" data-symbol="F">F (Flúor)</li>
+            <li class="element-item" draggable="true" data-symbol="S">S (Azufre)</li>
+            <li class="element-item" draggable="true" data-symbol="O">O (Oxígeno)</li>
+            <li class="element-item" draggable="true" data-symbol="I">I (Yodo)</li>
+            <li class="element-item" draggable="true" data-symbol="Br">Br (Bromo)</li>
+        </ul>
+        <button onclick="checkOrder()">Comprobar Orden</button>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        const sortableList = document.getElementById('sortable-list');
+        const feedbackDiv = document.getElementById('feedback');
+
+        // Orden correcto de menor a mayor afinidad electrónica:
+        // Nitrogeno (N): +7 kJ/mol (menor afinidad, incluso requiere energía)
+        // Oxígeno (O): -142 kJ/mol
+        // Azufre (S): -200 kJ/mol
+        // Yodo (I): -295 kJ/mol
+        // Bromo (Br): -324 kJ/mol
+        // Flúor (F): -328 kJ/mol (es una anomalía, menor que Cl debido a la repulsión de electrones en su tamaño pequeño)
+        // Cloro (Cl): -349 kJ/mol (mayor afinidad)
+        const correctOrder = ["N", "O", "S", "I", "Br", "F", "Cl"];
+
+        let draggedItem = null;
+
+        // Evento que se dispara cuando comienza a arrastrarse un elemento
+        sortableList.addEventListener('dragstart', (e) => {
+            draggedItem = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.dataset.symbol); // Necesario para Firefox
+        });
+
+        // Evento que se dispara mientras un elemento arrastrado se mueve sobre un objetivo válido
+        sortableList.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Permite soltar el elemento (drop)
+            const afterElement = getDragAfterElement(sortableList, e.clientY);
+            const currentItem = document.querySelector('.dragging');
+            if (currentItem) { // Asegura que hay un elemento siendo arrastrado
+                if (afterElement == null) {
+                    sortableList.appendChild(currentItem);
+                } else {
+                    sortableList.insertBefore(currentItem, afterElement);
+                }
+            }
+        });
+
+        // Evento que se dispara cuando se suelta un elemento arrastrado
+        sortableList.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+            draggedItem = null;
+        });
+
+        // Función para determinar dónde insertar el elemento arrastrado
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.element-item:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        // Función para comprobar si el orden es correcto
+        function checkOrder() {
+            const currentOrderElements = Array.from(sortableList.children);
+            const currentOrderSymbols = currentOrderElements.map(item => item.dataset.symbol);
+
+            let isCorrect = true;
+            for (let i = 0; i < correctOrder.length; i++) {
+                if (currentOrderSymbols[i] !== correctOrder[i]) {
+                    isCorrect = false;
+                    break;
+                }
+            }
+
+            if (isCorrect) {
+                feedbackDiv.textContent = '¡Correcto! Los elementos están ordenados adecuadamente.';
+                feedbackDiv.className = 'correct';
+            } else {
+                feedbackDiv.textContent = 'Incorrecto. Revisa el orden e inténtalo de nuevo.';
+                feedbackDiv.className = 'incorrect';
+            }
+        }
+    </script>
+</body>
+</html>
