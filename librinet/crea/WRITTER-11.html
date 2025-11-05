@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elaboración de Aceite de Oliva</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light grey background */
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scroll for elements like rotated banners */
+        }
+
+        .main-title {
+            font-family: 'Impact', 'Arial Black', Gadget, sans-serif;
+            font-size: 4.5em;
+            color: #cc0000; /* Darker red base */
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            position: relative;
+            letter-spacing: 2px;
+            text-shadow:
+                -1px -1px 0 #ffcc00, /* Top-left highlight */
+                1px -1px 0 #ffcc00,  /* Top-right highlight */
+                -1px 1px 0 #ffcc00,  /* Bottom-left highlight */
+                1px 1px 0 #ffcc00,   /* Bottom-right highlight */
+                2px 2px 0 #ff9900,   /* Orange layer */
+                4px 4px 0 #ff6600,   /* Darker orange layer */
+                6px 6px 0 #cc3300,   /* Red layer */
+                8px 8px 0 #990000;   /* Dark red shadow */
+            -webkit-text-stroke: 0.5px black; /* Thin black stroke for definition */
+        }
+
+        .content-area {
+            position: relative;
+            width: 90%; /* Responsive width */
+            max-width: 1200px; /* Max width to keep content legible */
+            margin: 0 auto;
+            min-height: 550px; /* Ensure enough height for all elements */
+            padding-bottom: 150px; /* Space for the bottom banner */
+        }
+
+        /* Etapas Box */
+        .etapas-box {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 120px;
+            height: 60px;
+            background-color: #6699ff; /* Light blue */
+            border-radius: 50%; /* Oval shape */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        /* Steps List and Connector */
+        .steps-wrapper {
+            position: absolute;
+            top: 70px; /* Align vertically with Etapas box */
+            left: 170px; /* Position to the right of Etapas box */
+            display: flex;
+            align-items: flex-start;
+            z-index: 5;
+        }
+
+        .list-connector {
+            position: absolute;
+            top: 0;
+            left: -20px; /* Position relative to .steps-wrapper */
+            width: 20px;
+            height: 100%;
+            border-top: 2px solid #6699ff;
+            border-left: 2px solid #6699ff;
+            border-top-left-radius: 10px; /* Simulate a slight curve */
+            min-height: 250px; /* Ensure connector goes down */
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.1em;
+            padding-left: 10px; /* Space for bullet points */
+            position: relative;
+            z-index: 6;
+        }
+        .steps-list li {
+            margin-bottom: 15px; /* Spacing between items */
+            position: relative;
+            padding-left: 20px; /* Space for custom bullet */
+            line-height: 1.3;
+        }
+        .steps-list li::before {
+            content: '•'; /* Custom bullet point */
+            color: black;
+            font-size: 1.4em;
+            position: absolute;
+            left: 0; /* Align with padding-left of li */
+            top: -2px;
+        }
+
+        /* Right Banner */
+        .right-banner {
+            position: absolute;
+            top: 200px;
+            right: 50px;
+            width: 250px;
+            background-color: #009933; /* Green */
+            color: white;
+            padding: 20px;
+            border-radius: 15px 50px 50px 15px; /* Rounded ends */
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.4;
+            font-size: 1.1em;
+            transform: rotate(3deg); /* Slight rotation */
+            z-index: 8;
+        }
+
+        /* Arrow */
+        .arrow {
+            position: absolute;
+            top: 310px; /* Vertically align with "Separación de fases sólidas y líquidas" */
+            left: 50%; /* Center initially */
+            transform: translateX(-50%); /* Adjust to true center */
+            width: 150px; /* Length of the arrow shaft */
+            height: 20px;
+            background-color: #99cc33; /* Light green arrow color */
+            border-radius: 5px;
+            z-index: 9;
+            transform: rotate(0deg); /* No rotation for this one in the image */
+            left: 550px; /* Manually position */
+            top: 290px;
+            width: 120px;
+            height: 10px;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: -20px; /* Position the head to the right of the shaft */
+            top: -5px; /* Adjust vertically to center with shaft */
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 20px solid #99cc33; /* Arrowhead color */
+        }
+
+        /* Bottom Banner */
+        .bottom-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #6a006a; /* Dark purple */
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 0 0 50px 50px; /* Curved bottom edge */
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.3);
+            z-index: 100; /* Ensure it's on top */
+            box-sizing: border-box; /* Include padding in width */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-title">Elaboración de aceite de oliva</div>
+
+    <div class="content-area">
+        <div class="etapas-box">Etapas</div>
+
+        <div class="steps-wrapper">
+            <div class="list-connector"></div>
+            <ul class="steps-list">
+                <li>Recoger las aceitunas, varear.</li>
+                <li>Recepción de las aceitunas en las almazaras</li>
+                <li>Molienda y batido</li>
+                <li id="separacion-fases">Separación de fases sólidas y líquidas</li>
+                <li>Separación de las fases líquidas</li>
+                <li>Clasificación y almacenamiento</li>
+                <li>Envasado del aceite de oliva</li>
+            </ul>
+        </div>
+
+        <div class="right-banner">
+            <p>No hay aceites de calidad sin aceitunas de calidad</p>
+        </div>
+
+        <div class="arrow"></div>
+    </div>
+
+    <div class="bottom-banner">
+        <p>Para obtener un aceite de calidad, la aceituna debe procesarse cuanto antes, como máximo en las 24 horas siguientes a su recogida.</p>
+    </div>
+</body>
+</html>
