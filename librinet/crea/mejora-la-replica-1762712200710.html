@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Réplica 3D Mejorada</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            /* Fondo ligeramente degradado para un ambiente más suave */
+            background: linear-gradient(to bottom right, #f0f8ff, #e0eafc);
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Importa la librería Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+    <!-- Importa OrbitControls para la interacción del usuario -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        // 1. Configuración básica de la escena
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true; // Habilita las sombras
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Tipo de mapa de sombras
+        renderer.setClearColor(0xf0f0f0); // Color de fondo claro
+        document.body.appendChild(renderer.domElement);
+
+        // 2. Controles de órbita para interacción
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // Suaviza el movimiento de la cámara
+        controls.dampingFactor = 0.25;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 5; // Zoom mínimo
+        controls.maxDistance = 15; // Zoom máximo
+        controls.maxPolarAngle = Math.PI / 1.8; // Restringe la vista desde abajo
+        controls.minPolarAngle = Math.PI / 3; // Restringe la vista desde arriba
+
+        // 3. Iluminación
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Luz ambiental suave
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7); // Luz direccional principal
+        directionalLight.position.set(5, 10, 7); // Posición de la luz
+        directionalLight.castShadow = true; // La luz arroja sombras
+        // Configuración de la sombra de la luz direccional
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.camera.near = 0.5;
+        directionalLight.shadow.camera.far = 50;
+        directionalLight.shadow.camera.left = -5;
+        directionalLight.shadow.camera.right = 5;
+        directionalLight.shadow.camera.top = 5;
+        directionalLight.shadow.camera.bottom = -5;
+        scene.add(directionalLight);
+
+        // 4. Materiales
+        const pinkMaterial = new THREE.MeshStandardMaterial({ color: 0xff99cc, roughness: 0.6, metalness: 0.1 }); // Rosa
+        const yellowEyeMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00, roughness: 0.3, metalness: 0.0 }); // Amarillo brillante
+        const blackMaterial = new THREE.MeshStandardMaterial({ color: 0x000000, roughness: 0.5, metalness: 0.1 }); // Negro
+        const whiteMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4, metalness: 0.0 }); // Blanco
+
+        // 5. Grupo para el personaje (facilita el movimiento y la rotación conjunta)
+        const character = new THREE.Group();
+
+        // 6. Cuerpo (trapezoidal)
+        // Usamos un cono truncado (CylinderGeometry con radios diferentes)
+        const bodyGeometry = new THREE.CylinderGeometry(1.0, 0.6, 2.0, 32, 1, false); // radio superior, radio inferior, altura
+        const body = new THREE.Mesh(bodyGeometry, pinkMaterial);
+        body.position.y = 0; // Se asienta en el origen Y
+        body.castShadow = true;
+        body.receiveShadow = true;
+        character.add(body);
+
+        // 7. Cabeza
+        const headGeometry = new THREE.SphereGeometry(1.1, 32, 32);
+        const head = new THREE.Mesh(headGeometry, pinkMaterial);
+        head.position.y = 1.9; // Posicionada encima del cuerpo
+        head.castShadow = true;
+        head.receiveShadow = true;
+        character.add(head);
+
+        // 8. Ojos
+        const eyeSphereGeometry = new THREE.SphereGeometry(0.35, 16, 16); // Ojos esféricos amarillos
+        const leftEye = new THREE.Mesh(eyeSphereGeometry, yellowEyeMaterial);
+        leftEye.position.set(-0.4, 0.25, 0.95); // Posición relativa a la cabeza
+        head.add(leftEye);
+
+        const rightEye = new THREE.Mesh(eyeSphereGeometry, yellowEyeMaterial);
+        rightEye.position.set(0.4, 0.25, 0.95); // Posición relativa a la cabeza
+        head.add(rightEye);
+
+        // 9. Pupilas (rasgadas)
+        const pupilGeometry = new THREE.CylinderGeometry(0.08, 0.08, 0.4, 8); // Cilindro delgado
+        const leftPupil = new THREE.Mesh(pupilGeometry, blackMaterial);
+        leftPupil.rotation.z = Math.PI / 2; // Gira para ser horizontal
+        leftPupil.position.set(0, 0, 0.1); // Ligeramente en frente del ojo
+        leftEye.add(leftPupil);
+
+        const rightPupil = new THREE.Mesh(pupilGeometry, blackMaterial);
+        rightPupil.rotation.z = Math.PI / 2;
+        rightPupil.position.set(0, 0, 0.1);
+        rightEye.add(rightPupil);
+
+        // 10. Boca (curvada con dientes)
+        // Base de la boca (un torus para la curva)
+        const mouthCurveGeometry = new THREE.TorusGeometry(0.4, 0.05, 8, 16, Math.PI); // Radio, grosor, segmentos radiales, segmentos tubulares, arco
+        const mouthCurve = new THREE.Mesh(mouthCurveGeometry, blackMaterial);
+        mouthCurve.rotation.x = Math.PI / 2; // Orienta la curva
+        mouthCurve.position.set(0, -0.4, 1.05); // Posición relativa a la cabeza
+        head.add(mouthCurve);
+
+        // Dientes/Colmillos (pequeños conos a lo largo de la boca)
+        const fangGeometry = new THREE.ConeGeometry(0.08, 0.3, 8); // radio, altura, segmentos
+        const numFangs = 6;
+        for (let i = 0; i < numFangs; i++) {
+            const fang = new THREE.Mesh(fangGeometry, whiteMaterial);
+            // Calcula la posición a lo largo de la curva de la boca
+            const angle = (i / (numFangs - 1)) * Math.PI - Math.PI / 2; // De -PI/2 a PI/2
+            fang.position.x = Math.cos(angle) * 0.4; // Radio del torus
+            fang.position.y = Math.sin(angle) * 0.4 - 0.4; // Ajuste para la posición y la curva
+            fang.position.z = 1.08; // Ligeramente delante de la boca
+            fang.rotation.y = angle; // Orienta los colmillos hacia la curva
+            head.add(fang);
+        }
+
+        // 11. Pelo (hebras cónicas)
+        const hairStrandGeometry = new THREE.ConeGeometry(0.18, 0.6, 8); // radio, altura, segmentos
+        const hairStrands = [
+            { x: -0.5, y: 0.9, z: 0.7, rotZ: -0.6 },
+            { x: -0.2, y: 1.0, z: 0.75, rotZ: -0.2 },
+            { x: 0.1, y: 1.0, z: 0.75, rotZ: 0.2 },
+            { x: 0.4, y: 0.9, z: 0.7, rotZ: 0.6 },
+        ];
+        hairStrands.forEach(strand => {
+            const hair = new THREE.Mesh(hairStrandGeometry, blackMaterial);
+            hair.position.set(strand.x, strand.y, strand.z);
+            hair.rotation.z = strand.rotZ;
+            hair.castShadow = true;
+            head.add(hair);
+        });
+
+        // 12. Plano del suelo para recibir sombras
+        const groundGeometry = new THREE.PlaneGeometry(20, 20);
+        const groundMaterial = new THREE.MeshStandardMaterial({ color: 0xd3d3d3, roughness: 0.8, metalness: 0.0 });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2; // Rota para que sea horizontal
+        ground.position.y = -1.0; // Colocado debajo del personaje
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // 13. Posición inicial de la cámara
+        camera.position.set(0, 3, 7); // Vista ligeramente elevada y hacia atrás
+        controls.target.set(0, 1.0, 0); // Apunta al centro del personaje
+        controls.update();
+
+        // 14. Función de animación
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update(); // Actualiza los controles en cada frame
+            renderer.render(scene, camera);
+        }
+
+        // 15. Ajustar al cambio de tamaño de ventana
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Iniciar la animación
+        animate();
+    </script>
+</body>
+</html>
