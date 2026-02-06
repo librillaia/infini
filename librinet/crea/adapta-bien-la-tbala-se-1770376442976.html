@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Channel vs Single Channel RAM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        /* Contenedor para la tabla para permitir el scroll horizontal */
+        .table-responsive-container {
+            width: 80%; /* Ancho del contenedor, igual al de la tabla */
+            margin: 0 auto;
+            overflow-x: auto; /* Permite el scroll horizontal si la tabla es más ancha */
+            -webkit-overflow-scrolling: touch; /* Mejora el scroll en dispositivos táctiles */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra para el contenedor */
+        }
+        table {
+            width: 100%; /* La tabla ocupa el 100% de su contenedor responsivo */
+            border-collapse: collapse;
+            background-color: #fff;
+            min-width: 600px; /* Ancho mínimo para la tabla, ajusta si es necesario */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top; /* Alinea el contenido de las celdas en la parte superior */
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            white-space: nowrap; /* Evita que los encabezados se corten */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+        caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+            text-align: center; /* Centra el título de la tabla */
+            padding: 10px 0;
+        }
+        .note {
+            width: 80%;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-left: 6px solid #2196F3;
+            color: #333;
+            font-size: 0.9em;
+        }
+        .copy-button-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .copy-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .copy-button:hover {
+            background-color: #218838;
+        }
+
+        /* Ajustes para pantallas más pequeñas */
+        @media screen and (max-width: 768px) {
+            .table-responsive-container, .note {
+                width: 95%; /* Ocupa más ancho en pantallas pequeñas */
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            caption {
+                font-size: 1.3em;
+            }
+            th, td {
+                padding: 8px 10px; /* Reduce el padding en celdas */
+                font-size: 0.9em; /* Reduce el tamaño de fuente */
+            }
+            .copy-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Dual Channel vs Single Channel: Diferencias en Memoria RAM</h1>
+
+    <div class="table-responsive-container">
+        <table id="ramTable">
+            <caption>Comparativa de Configuraciones de Memoria RAM</caption>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Single Channel</th>
+                    <th>Dual Channel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Número de Módulos</strong></td>
+                    <td>Un único módulo de memoria RAM.</td>
+                    <td>Dos módulos de memoria RAM.</td>
+                </tr>
+                <tr>
+                    <td><strong>Canales de Transmisión</strong></td>
+                    <td>Un único canal para lectura y/o escritura de datos.</td>
+                    <td>Dos canales de transmisión de datos que trabajan en conjunto.</td>
+                </tr>
+                <tr>
+                    <td><strong>Ancho de Banda</strong></td>
+                    <td>Menor ancho de banda disponible.</td>
+                    <td>Mayor ancho de banda disponible, lo que permite transferir datos a mayor velocidad.</td>
+                </tr>
+                <tr>
+                    <td><strong>Velocidad/Eficiencia</strong></td>
+                    <td>Menor velocidad y eficiencia en la transferencia de datos a la CPU.</td>
+                    <td>Mejora la velocidad y eficiencia de la memoria RAM, proporcionando una experiencia más fluida.</td>
+                </tr>
+                <tr>
+                    <td><strong>Costo</strong></td>
+                    <td>Generalmente más económico al contar con un único módulo.</td>
+                    <td>Suele ser más costoso al requerir dos módulos.</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso Ideal</strong></td>
+                    <td>Tareas de baja exigencia como navegación por internet, ofimática básica, uso diario general sin software pesado.</td>
+                    <td>Actividades que requieren alto rendimiento y ancho de banda (edición de vídeo, renderizado 3D, juegos de última generación con gráficos intensivos).</td>
+                </tr>
+                <tr>
+                    <td><strong>Rendimiento en Tareas Exigentes</strong></td>
+                    <td>Puede experimentar limitaciones y menor capacidad de respuesta.</td>
+                    <td>Mejor velocidad y capacidad de respuesta, sin interrupciones en actividades exigentes.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="copy-button-container">
+        <button class="copy-button" onclick="copyTableWithFormat()">Copiar Tabla</button>
+    </div>
+
+    <div class="note">
+        <strong>Nota importante:</strong> La placa base de tu equipo debe ser compatible con la configuración Dual Channel para poder aprovechar sus beneficios. Además, el tipo de memoria (DDR4 o DDR5) también es crucial, ya que no son compatibles entre sí y DDR5 ofrece mayores capacidades y velocidades.
+    </div>
+
+    <script>
+        function copyTableWithFormat() {
+            const table = document.getElementById('ramTable');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                const successful = document.execCommand('copy');
+                const msg = successful ? '¡Tabla copiada al portapapeles con formato!' : 'Error al copiar la tabla.';
+                alert(msg);
+            } catch (err) {
+                console.error('Fallback: Error al copiar el contenido formateado', err);
+                // Fallback for browsers that don't support execCommand for rich text or if it fails
+                copyTableAsPlainText(); // Fallback to plain text copy
+            }
+
+            window.getSelection().removeAllRanges(); // Clear selection
+        }
+
+        // Fallback function to copy as plain text
+        function copyTableAsPlainText() {
+            const table = document.getElementById('ramTable');
+            let tableText = '';
+
+            const caption = table.querySelector('caption');
+            if (caption) {
+                tableText += caption.textContent.trim() + '\n\n';
+            }
+
+            const headers = table.querySelectorAll('thead th');
+            headers.forEach((header, index) => {
+                tableText += header.textContent.trim();
+                if (index < headers.length - 1) {
+                    tableText += '\t';
+                }
+            });
+            tableText += '\n';
+
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    tableText += cell.textContent.trim();
+                    if (index < cells.length - 1) {
+                        tableText += '\t';
+                    }
+                });
+                tableText += '\n';
+            });
+
+            navigator.clipboard.writeText(tableText)
+                .then(() => {
+                    alert('¡Tabla copiada al portapapeles como texto plano (el copiado con formato no funcionó)!');
+                })
+                .catch(err => {
+                    console.error('Error al copiar la tabla como texto plano: ', err);
+                    alert('Error al copiar la tabla. Por favor, inténtalo de nuevo o copia manualmente.');
+                });
+        }
+    </script>
+</body>
+</html>
