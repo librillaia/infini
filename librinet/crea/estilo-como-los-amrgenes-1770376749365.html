@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Tabla RAM</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; /* Reinicia el margen del body */
+            padding: 20px; /* Añade un padding general para los "márgenes" externos */
+            background-color: #eef1f5; /* Un color de fondo más suave */
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em; /* Un poco más grande para el título principal */
+            font-weight: 600;
+        }
+        .container {
+            max-width: 1200px; /* Limita el ancho máximo de los contenedores principales */
+            margin: 0 auto; /* Centra el contenido */
+            padding: 0 15px; /* Padding horizontal para los lados */
+        }
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px; /* Aumenta el espacio entre los controles */
+            justify-content: center;
+            padding: 20px; /* Más padding interno */
+            background-color: #ffffff;
+            border-radius: 10px; /* Bordes más redondeados */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra más pronunciada */
+            margin-bottom: 30px; /* Margen inferior para separar de la tabla */
+        }
+        .controls-container button, .controls-container input[type="color"] {
+            padding: 10px 18px; /* Un poco más de padding en botones */
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para botones */
+        }
+        .controls-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Espacio entre label e input */
+            margin: 0 10px;
+        }
+        .control-group label {
+            font-weight: 600;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Estilos de botones por función */
+        .btn-toggle { background-color: #007bff; color: white; }
+        .btn-toggle:hover { background-color: #0056b3; }
+        .btn-add { background-color: #28a745; color: white; }
+        .btn-add:hover { background-color: #218838; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .btn-delete:hover { background-color: #c82333; }
+        .btn-copy { background-color: #17a2b8; color: white; }
+        .btn-copy:hover { background-color: #138496; }
+
+        /* Contenedor para la tabla para permitir el scroll horizontal */
+        .table-responsive-container {
+            margin: 0 auto;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Sombra igual que los controles */
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px; /* Padding interno para que la tabla no toque los bordes del contenedor */
+            margin-bottom: 30px; /* Margen inferior */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            min-width: 750px; /* Ancho mínimo de la tabla, ajustado para evitar que se "entrecorte" demasiado pronto */
+        }
+        th, td {
+            border: 1px solid #e0e0e0; /* Borde más suave */
+            padding: 14px 18px; /* Más padding en celdas para un look espacioso */
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+            max-width: 300px; /* Limita el ancho de la celda para evitar columnas demasiado anchas */
+            box-sizing: border-box; /* Asegura que padding y border se incluyan en el ancho */
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 700; /* Más negrita */
+            text-transform: uppercase;
+            white-space: normal; /* Permite que los encabezados se envuelvan si son largos */
+            position: sticky; /* Sticky headers for better readability on scroll */
+            top: 0;
+            z-index: 1; /* Asegura que los headers estén sobre el contenido */
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafd; /* Un azul muy pálido para filas pares */
+        }
+        tr:hover {
+            background-color: #e6f7ff; /* Un azul más claro al pasar el ratón */
+        }
+        caption {
+            font-size: 1.7em; /* Un poco más grande */
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .note {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #e7f3ff;
+            border-left: 6px solid #2196F3;
+            color: #333;
+            font-size: 1em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .note em {
+            font-weight: 600;
+            color: #0056b3;
+        }
+        /* Estilo para celda seleccionada */
+        td.selected {
+            border: 2px solid #ffc107; /* Borde amarillo para resaltar */
+            box-shadow: 0 0 5px rgba(255,193,7,0.5);
+            outline: none; /* Elimina el outline por defecto del navegador */
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 992px) {
+            .container, .controls-container, .table-responsive-container, .note {
+                max-width: 95%; /* Ocupa más ancho en pantallas medianas */
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            caption {
+                font-size: 1.4em;
+            }
+            th, td {
+                padding: 10px 14px;
+                font-size: 0.88em;
+                max-width: 250px;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 15px;
+            }
+            .control-group {
+                flex-direction: row; /* Mantener label e input en la misma fila si es posible */
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 5px;
+            }
+            .controls-container button {
+                width: 100%; /* Botones de control ocupan todo el ancho */
+                margin-bottom: 5px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            caption {
+                font-size: 1.2em;
+            }
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.8em;
+                max-width: 200px; /* Reducir aún más el ancho máximo de celda */
+            }
+            table {
+                min-width: 600px; /* Asegurar un min-width para la tabla */
+            }
+        }
+        @media screen and (max-width: 500px) {
+            th, td {
+                padding: 6px 8px;
+                font-size: 0.75em;
+                max-width: 150px;
+            }
+            table {
+                min-width: 500px;
+            }
+            .control-group {
+                flex-direction: column; /* Apilar label e input en pantallas muy pequeñas */
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editor de Tabla: Dual Channel vs Single Channel RAM</h1>
+
+        <div class="controls-container">
+            <button class="btn-toggle" onclick="toggleEditable()">Toggle Edición (Contenido)</button>
+            <button class="btn-add" onclick="addRow()">Añadir Fila</button>
+            <button class="btn-delete" onclick="deleteRow()">Eliminar Última Fila</button>
+            <button class="btn-add" onclick="addColumn()">Añadir Columna</button>
+            <button class="btn-delete" onclick="deleteColumn()">Eliminar Última Columna</button>
+            <button class="btn-copy" onclick="copyTableWithFormat()">Copiar Tabla</button>
+            <div class="control-group">
+                <label for="bgColorPicker">Fondo Celda:</label>
+                <input type="color" id="bgColorPicker" onchange="applyCellColor()">
+            </div>
+        </div>
+
+        <div class="table-responsive-container">
+            <table id="ramTable">
+                <caption>Comparativa de Configuraciones de Memoria RAM</caption>
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Single Channel</th>
+                        <th>Dual Channel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true"><strong>Número de Módulos</strong></td>
+                        <td contenteditable="true">Un único módulo de memoria RAM.</td>
+                        <td contenteditable="true">Dos módulos de memoria RAM.</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Canales de Transmisión</strong></td>
+                        <td contenteditable="true">Un único canal para lectura y/o escritura de datos.</td>
+                        <td contenteditable="true">Dos canales de transmisión de datos que trabajan en conjunto.</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Ancho de Banda</strong></td>
+                        <td contenteditable="true">Menor ancho de banda disponible.</td>
+                        <td contenteditable="true">Mayor ancho de banda disponible, lo que permite transferir datos a mayor velocidad.</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Velocidad/Eficiencia</strong></td>
+                        <td contenteditable="true">Menor velocidad y eficiencia en la transferencia de datos a la CPU.</td>
+                        <td contenteditable="true">Mejora la velocidad y eficiencia de la memoria RAM, proporcionando una experiencia más fluida.</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Costo</strong></td>
+                        <td contenteditable="true">Generalmente más económico al contar con un único módulo.</td>
+                        <td contenteditable="true">Suele ser más costoso al requerir dos módulos.</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Uso Ideal</strong></td>
+                        <td contenteditable="true">Tareas de baja exigencia como navegación por internet, ofimática básica, uso diario general sin software pesado.</td>
+                        <td contenteditable="true">Actividades que requieren alto rendimiento y ancho de banda (edición de vídeo, renderizado 3D, juegos de última generación con gráficos intensivos).</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true"><strong>Rendimiento en Tareas Exigentes</strong></td>
+                        <td contenteditable="true">Puede experimentar limitaciones y menor capacidad de respuesta.</td>
+                        <td contenteditable="true">Mejor velocidad y capacidad de respuesta, sin interrupciones en actividades exigentes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note">
+            <strong>Nota importante:</strong> La placa base de tu equipo debe ser compatible con la configuración Dual Channel para poder aprovechar sus beneficios. Además, el tipo de memoria (DDR4 o DDR5) también es crucial, ya que no son compatibles entre sí y DDR5 ofrece mayores capacidades y velocidades.
+            <br><em>Haz clic en las celdas para editar su contenido y usa los controles para modificar la tabla o su formato.</em>
+        </div>
+    </div>
+
+    <script>
+        let isEditable = true;
+        let selectedCell = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cells = document.querySelectorAll('#ramTable td');
+            cells.forEach(cell => {
+                cell.setAttribute('contenteditable', 'true');
+                cell.addEventListener('click', selectCell);
+                cell.addEventListener('focus', selectCell); // También al enfocar
+            });
+            // Inicializar la selección de celda al cargar la página si hay celdas
+            if (cells.length > 0) {
+                selectCell({ target: cells });
+            }
+        });
+
+        function toggleEditable() {
+            isEditable = !isEditable;
+            const cells = document.querySelectorAll('#ramTable td');
+            cells.forEach(cell => {
+                cell.setAttribute('contenteditable', isEditable);
+            });
+            alert('Modo edición ' + (isEditable ? 'activado' : 'desactivado') + ' para el contenido de las celdas.');
+        }
+
+        function addRow() {
+            const tableBody = document.querySelector('#ramTable tbody');
+            const colCount = document.querySelectorAll('#ramTable thead th').length;
+            const newRow = tableBody.insertRow(-1); // Inserta al final
+            for (let i = 0; i < colCount; i++) {
+                const newCell = newRow.insertCell(i);
+                newCell.contentEditable = isEditable;
+                newCell.textContent = 'Nueva entrada'; // Texto predeterminado
+                newCell.addEventListener('click', selectCell);
+                newCell.addEventListener('focus', selectCell);
+            }
+        }
+
+        function deleteRow() {
+            const tableBody = document.querySelector('#ramTable tbody');
+            if (tableBody.rows.length > 1) {
+                tableBody.deleteRow(tableBody.rows.length - 1);
+                // Si la celda seleccionada era de la fila eliminada, deseleccionar
+                if (selectedCell && !tableBody.contains(selectedCell)) {
+                    selectedCell.classList.remove('selected');
+                    selectedCell = null;
+                }
+            } else {
+                alert('No se pueden eliminar más filas. Debe haber al menos una.');
+            }
+        }
+
+        function addColumn() {
+            const tableHeadRow = document.querySelector('#ramTable thead tr');
+            const tableBodyRows = document.querySelectorAll('#ramTable tbody tr');
+
+            const newHeader = document.createElement('th');
+            newHeader.textContent = 'Nueva Columna';
+            tableHeadRow.appendChild(newHeader);
+
+            tableBodyRows.forEach(row => {
+                const newCell = row.insertCell(row.cells.length);
+                newCell.contentEditable = isEditable;
+                newCell.textContent = 'Nuevo dato';
+                newCell.addEventListener('click', selectCell);
+                newCell.addEventListener('focus', selectCell);
+            });
+        }
+
+        function deleteColumn() {
+            const tableHeadRow = document.querySelector('#ramTable thead tr');
+            const tableBodyRows = document.querySelectorAll('#ramTable tbody tr');
+
+            if (tableHeadRow.cells.length > 1) {
+                // Determine the index of the last column to remove
+                const lastColIndex = tableHeadRow.cells.length - 1;
+
+                // Remove header
+                tableHeadRow.deleteCell(lastColIndex);
+
+                // Remove cells from body rows
+                tableBodyRows.forEach(row => {
+                    if (row.cells.length > lastColIndex) { // Ensure the row actually has this column
+                        row.deleteCell(lastColIndex);
+                    }
+                });
+
+                // If the selected cell was in the deleted column, deselect it
+                if (selectedCell) {
+                    const selectedCellColumnIndex = Array.from(selectedCell.parentNode.children).indexOf(selectedCell);
+                    if (selectedCellColumnIndex === lastColIndex) {
+                        selectedCell.classList.remove('selected');
+                        selectedCell = null;
+                    }
+                }
+            } else {
+                alert('No se pueden eliminar más columnas. Debe haber al menos una.');
+            }
+        }
+
+        function selectCell(event) {
+            // Deseleccionar celda previa si existe
+            if (selectedCell) {
+                selectedCell.classList.remove('selected');
+            }
+            // Seleccionar la nueva celda
+            selectedCell = event.target;
+            selectedCell.classList.add('selected');
+
+            // Actualizar el color picker con el color de fondo actual de la celda
+            const currentColor = window.getComputedStyle(selectedCell).backgroundColor;
+            document.getElementById('bgColorPicker').value = rgbToHex(currentColor) || '#ffffff';
+        }
+
+        function applyCellColor() {
+            if (selectedCell) {
+                const color = document.getElementById('bgColorPicker').value;
+                selectedCell.style.backgroundColor = color;
+            } else {
+                alert('Por favor, selecciona una celda primero para aplicar el color de fondo.');
+            }
+        }
+
+        // Helper function to convert RGB to Hex
+        function rgbToHex(rgb) {
+            if (!rgb || rgb.startsWith('rgba')) return null; // Ignore rgba for simplicity or handle alpha
+            // Check if it's already hex
+            if (rgb.startsWith('#')) return rgb;
+
+            const parts = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            if (!parts) return null;
+
+            function hex(x) {
+                return ("0" + parseInt(x).toString(16)).slice(-2);
+            }
+            return "#" + hex(parts) + hex(parts) + hex(parts);
+        }
+
+
+        function copyTableWithFormat() {
+            const table = document.getElementById('ramTable');
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                const successful = document.execCommand('copy');
+                const msg = successful ? '¡Tabla copiada al portapapeles con formato!' : 'Error al copiar la tabla.';
+                alert(msg);
+            } catch (err) {
+                console.error('Fallback: Error al copiar el contenido formateado', err);
+                copyTableAsPlainText(); // Fallback to plain text copy
+            }
+
+            window.getSelection().removeAllRanges(); // Clear selection
+        }
+
+        function copyTableAsPlainText() {
+            const table = document.getElementById('ramTable');
+            let tableText = '';
+
+            const caption = table.querySelector('caption');
+            if (caption) {
+                tableText += caption.textContent.trim() + '\n\n';
+            }
+
+            const headers = table.querySelectorAll('thead th');
+            headers.forEach((header, index) => {
+                tableText += header.textContent.trim();
+                if (index < headers.length - 1) {
+                    tableText += '\t';
+                }
+            });
+            tableText += '\n';
+
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    tableText += cell.textContent.trim();
+                    if (index < cells.length - 1) {
+                        tableText += '\t';
+                    }
+                });
+                tableText += '\n';
+            });
+
+            navigator.clipboard.writeText(tableText)
+                .then(() => {
+                    alert('¡Tabla copiada al portapapeles como texto plano (el copiado con formato no funcionó)!');
+                })
+                .catch(err => {
+                    console.error('Error al copiar la tabla como texto plano: ', err);
+                    alert('Error al copiar la tabla. Por favor, inténtalo de nuevo o copia manualmente.');
+                });
+        }
+    </script>
+</body>
+</html>
